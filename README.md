@@ -1,0 +1,1 @@
+This project is a reincarnation of [TimeScheduler](https://github.com/Zallist/TimeScheduler).
