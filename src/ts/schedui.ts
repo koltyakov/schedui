@@ -125,15 +125,13 @@ var SchedUI = {
             ItemMovementEnd: null,
 
             // function (eventData, itemData)
-            ItemEventClick: null,
+            ItemEventClicked: null,
 
             // function (eventData, itemData)
             ItemEventMouseEnter: null,
 
             // function (eventData, itemData)
-            ItemEventMouseLeave: null,
-
-            ItemEventClicked: null
+            ItemEventMouseLeave: null
         },
 
         // Should dragging be enabled?
@@ -572,19 +570,22 @@ var SchedUI = {
                                 .css('left', eventDiff + '%')
                                 .attr('title', event.at.format(SchedUI.Options.LowerFormat) + ' - ' + event.label)
                                 .data('event', event)
-                                .appendTo(itemElem);
+                                .appendTo(itemContent);
+                                //.appendTo(itemElem);
                         }
                     }
 
                     if (item.start >= SchedUI.Options.Start) {
                         $(document.createElement('div'))
                             .addClass('time-sch-item-start')
-                            .appendTo(itemElem);
+                            .appendTo(itemContent);
+                            //.appendTo(itemElem);
                     }
                     if (item.end <= end) {
                         $(document.createElement('div'))
                             .addClass('time-sch-item-end')
-                            .appendTo(itemElem);
+                            .appendTo(itemContent);
+                            //.appendTo(itemElem);
                     }
 
                     item.Element = itemElem;
@@ -658,6 +659,7 @@ var SchedUI = {
     },
 
     SetupItemEvents: function (itemElem) {
+
         if (SchedUI.Options.Events.ItemClicked) {
             itemElem.click(function (event) {
                 event.preventDefault();
@@ -885,7 +887,6 @@ var SchedUI = {
         if (SchedUI.Options.Events.ItemEventClicked) {
             itemElem.find('.time-sch-item-event').click(function (event) {
                 var itemElem = $(this).closest('.time-sch-item');
-
                 event.preventDefault();
                 SchedUI.Options.Events.ItemEventClicked.call(this, $(this).data('event'), itemElem.data('item'));
             });
@@ -893,17 +894,17 @@ var SchedUI = {
         if (SchedUI.Options.Events.ItemEventMouseEnter) {
             itemElem.find('.time-sch-item-event').mouseenter(function (event) {
                 var itemElem = $(this).closest('.time-sch-item');
-
                 event.preventDefault();
-                SchedUI.Options.Events.ItemEventClicked.call(this, $(this).data('event'), itemElem.data('item'));
+                // SchedUI.Options.Events.ItemEventClicked.call(this, $(this).data('event'), itemElem.data('item'));
+                SchedUI.Options.Events.ItemEventMouseEnter.call(this, $(this).data('event'), itemElem.data('item'));                
             });
         }
         if (SchedUI.Options.Events.ItemEventMouseLeave) {
             itemElem.find('.time-sch-item-event').mouseleave(function (event) {
                 var itemElem = $(this).closest('.time-sch-item');
-
                 event.preventDefault();
-                SchedUI.Options.Events.ItemEventClicked.call(this, $(this).data('event'), itemElem.data('item'));
+                // SchedUI.Options.Events.ItemEventClicked.call(this, $(this).data('event'), itemElem.data('item'));
+                SchedUI.Options.Events.ItemEventMouseLeave.call(this, $(this).data('event'), itemElem.data('item'));
             });
         }
     },
