@@ -761,6 +761,11 @@ var SchedUI = {
     FillSchedule_Callback: function (obj) {
         SchedUI.CachedScheduleResult = obj;
         SchedUI.CreateItems(obj);
+        // Fix rows height
+        $(".time-sch-content-wrap > table > tbody > tr").each(function (i, d) {
+            $("div.time-sch-section-wrapper > div.time-sch-section-container:nth-child(" + (i + 1) + ")").attr("style", "height:" + $(d).height() + "px;");
+        });
+        // Fix rows height
     },
     FillHeader: function () {
         var durationString, title, periodContainer, timeContainer, periodButton, timeButton;
