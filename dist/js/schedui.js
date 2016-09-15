@@ -117,7 +117,8 @@ var SchedUI = {
         // Disable items on moving?
         DisableOnMove: true,
         // A given max height for the calendar, if unspecified, will expand forever
-        MaxHeight: null
+        MaxHeight: null,
+        AppendWeekDaysClasses: true
     },
     Wrapper: null,
     HeaderWrap: null,
@@ -298,6 +299,7 @@ var SchedUI = {
                 .appendTo(tr);
             for (var i = 0; i < splits; i++) {
                 thisTime = moment(SchedUI.Options.Start)["tsAdd"]('minutes', (i * period.TimeframePeriod));
+                // console.log(thisTime.day());
                 fThisTime = thisTime.format(header);
                 if (fPrevDate !== fThisTime) {
                     // If there is no prevDate, it's the Section Header
@@ -321,6 +323,11 @@ var SchedUI = {
                         .addClass('time-sch-header-' + headerCount + '-date-end')
                         .addClass('time-sch-header-' + headerCount + '-date-column-' + currentTimeIndex)
                         .addClass('time-sch-header-' + headerCount + '-date-' + ((currentTimeIndex % 2 === 0) ? 'even' : 'odd'));
+                    if (SchedUI.Options.AppendWeekDaysClasses) {
+                        if (headerCount > 0) {
+                            td.addClass('week-day-' + thisTime.day());
+                        }
+                    }
                     for (var prevHeader = 0; prevHeader < headerCount; prevHeader++) {
                         SchedUI.AddHeaderClasses(td, i, prevHeader);
                     }
@@ -367,6 +374,16 @@ var SchedUI = {
                 row: tr,
                 container: sectionContainer
             };
+            // Fill in weekends
+            if (SchedUI.Options.AppendWeekDaysClasses) {
+                $(".time-sch-content-header-wrap > table tr.time-sch-times-header-1 > td").each(function (i, d) {
+                    var tdClass = $(d).attr("class");
+                    var weekDayIndx = tdClass.indexOf("week-day-");
+                    if (weekDayIndx !== -1) {
+                        $(".time-sch-content-wrap > table tr > td:nth-child(" + (i + 1) + ")").addClass(tdClass.substring(weekDayIndx, weekDayIndx + 10));
+                    }
+                });
+            }
         }
         SchedUI.SectionWrap.css({
             left: SchedUI.Options.Element.find('.time-sch-section').outerWidth()
