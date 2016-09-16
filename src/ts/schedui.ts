@@ -332,8 +332,10 @@ var SchedUI = {
                         .addClass('time-sch-header-' + headerCount + '-date-' + ((currentTimeIndex % 2 === 0) ? 'even' : 'odd'));
 
                     if (SchedUI.Options.AppendWeekDaysClasses) {
-                        if (headerCount > 0) {
-                            td.addClass('week-day-' + thisTime.day());
+                        if (period.TimeframePeriod <= 1440) {
+                            if (headerCount > 0) {
+                                td.addClass('week-day-' + thisTime.day());
+                            }
                         }
                     }
 
