@@ -181,8 +181,13 @@ var SchedUI = {
     /* This should be used to recreate the scheduler with new defaults or refill items */
     Init: function (overrideCache) {
         SchedUI.Override = overrideCache || SchedUI.Override;
+        var hashObj = SchedUI.GetUrlHash();
         SchedUI.SetupPrototypes();
-        SchedUI.Options.Start = moment(SchedUI.Options.Start);
+        //SchedUI.Options.Start = moment(SchedUI.Options.Start);
+        
+        SchedUI.Options.Start = moment(hashObj["start"] || SchedUI.Options.Start || moment().startOf('day'));
+        SchedUI.Options.SelectedPeriod = hashObj["period"] || SchedUI.Options.SelectedPeriod;
+
         SchedUI.Options.Element.find('.ui-draggable').draggable('destroy');
         SchedUI.Options.Element.empty();
         SchedUI.Wrapper = $(document.createElement('div'))
@@ -209,6 +214,30 @@ var SchedUI = {
         } else {
             SchedUI.Init(overrideCache);
         }
+    },
+    SetUrlHash: function(key, value) {
+        var hashArr = [];
+        var hashObj = SchedUI.GetUrlHash();
+
+        hashObj[decodeURIComponent(key)] = decodeURIComponent(value);
+        for (var prop in hashObj) {
+            if (hashObj.hasOwnProperty(prop)) {
+                hashArr.push(encodeURIComponent(prop) + "=" + encodeURIComponent(hashObj[prop]));
+            }
+        }
+        window.location.hash = "#" + hashArr.join("&");
+    },
+    GetUrlHash: function() {
+        var hash = window.location.hash;
+        var hashObj = {};
+        hash = hash.replace("#", "");
+        if (hash.length > 0) {
+            hash.split("&").forEach(function(d) {
+                var pair = d.split("=");
+                hashObj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+            });
+        }
+        return hashObj;
     },
     GetSelectedPeriod: function () {
         var period;
@@ -882,6 +911,7 @@ var SchedUI = {
             },
             onSelect: function (date) {
                 SchedUI.Options.Start = moment(date);
+                SchedUI.SetUrlHash("start", SchedUI.Options.Start.toISOString());
                 if (typeof SchedUI.Options.GetSections === "function") {
                     SchedUI.Reload(SchedUI.Override);
                 } else {
@@ -899,13 +929,12 @@ var SchedUI = {
         period = SchedUI.GetSelectedPeriod();
         if ($(this).is('.time-sch-time-button-today')) {
             SchedUI.Options.Start = moment().startOf('day');
-        }
-        else if ($(this).is('.time-sch-time-button-prev')) {
+        } else if ($(this).is('.time-sch-time-button-prev')) {
             SchedUI.Options.Start["tsAdd"]('minutes', period.TimeframeOverall * -1);
-        }
-        else if ($(this).is('.time-sch-time-button-next')) {
+        } else if ($(this).is('.time-sch-time-button-next')) {
             SchedUI.Options.Start["tsAdd"]('minutes', period.TimeframeOverall);
         }
+        SchedUI.SetUrlHash("start", SchedUI.Options.Start.toISOString());
         if (typeof SchedUI.Options.GetSections === "function") {
             SchedUI.Reload(SchedUI.Override);
         } else {
@@ -915,6 +944,7 @@ var SchedUI = {
     /* Selects the period with the given name */
     SelectPeriod: function (name) {
         SchedUI.Options.SelectedPeriod = name;
+        SchedUI.SetUrlHash("period", SchedUI.Options.SelectedPeriod);
         if (typeof SchedUI.Options.GetSections === "function") {
             SchedUI.Reload(SchedUI.Override);
         } else {
