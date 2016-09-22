@@ -85,7 +85,8 @@ var SchedUI = {
             TodayButton: 'Today',
             TodayButtonTitle: 'Go to today',
             GotoButton: 'Go to',
-            GotoButtonTitle: 'Go to specific date'
+            GotoButtonTitle: 'Go to specific date',
+            NoElementsToDisplay: 'No elements to display' // Нет элементов для отображения
         },
         Events: {
             // function (item) { }
@@ -809,6 +810,12 @@ var SchedUI = {
         SchedUI.CachedSectionResult = obj;
         SchedUI.CreateSections(obj);
         SchedUI.FillSchedule();
+
+        if ($(".time-sch-content-wrap > .time-sch-table-content > tbody > tr").length === 0) {
+            $(".time-sch-content-wrap").after('<div class="no-elements">' + SchedUI.Options.Text.NoElementsToDisplay + '</div>');
+        } else {
+            $(".no-elements").remove();
+        }
     },
     FillSchedule: function () {
         var period, end;
