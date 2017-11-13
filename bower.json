@@ -2,24 +2,13 @@
   "name": "schedui",
   "description": "Sched UI - lite event schedule visualization UI library",
   "main": [
-    "dist/js/schedui.js",
-    "ist/css/schedui.css"
+    "dist/scripts/schedui.js"
   ],
   "authors": [
     "Andrew Koltyakov <andrew.koltyakov@gmail.com>"
   ],
   "license": "MIT",
   "homepage": "https://github.com/koltyakov/schedui",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests",
-    "src",
-    "typings",
-    "dist/lib"
-  ],
   "dependencies": {
     "jquery": "1.12.4",
     "jquery-ui": "jqueryui#1.12.0",

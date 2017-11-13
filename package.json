@@ -1,6 +1,6 @@
 {
   "name": "schedui",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Sched UI - lite event schedule visualization UI library",
   "main": "index.js",
   "scripts": {
@@ -18,17 +18,23 @@
   },
   "homepage": "https://github.com/koltyakov/schedui#readme",
   "devDependencies": {
-    "autoprefixer": "^6.4.1",
+    "@types/jquery": "^2.0.41",
+    "@types/jqueryui": "^1.11.37",
+    "@types/moment": "^2.13.0",
+    "autoprefixer": "^7.1.6",
     "browser-sync": "^2.15.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
-    "gulp-postcss": "^6.2.0",
-    "gulp-sass": "^2.3.2",
+    "gulp-postcss": "^7.0.0",
+    "gulp-sass": "^3.1.0",
     "gulp-scss": "^1.4.0",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-typescript": "^2.13.6",
-    "gulp-uglify": "^2.0.0",
-    "lost": "^7.1.0",
-    "merge2": "^1.0.2"
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-typescript": "^3.2.3",
+    "gulp-uglify": "^3.0.0",
+    "lost": "^8.2.0",
+    "merge2": "^1.0.2",
+    "tslint": "^5.8.0",
+    "tslint-config-standard": "^7.0.0",
+    "typescript": "^2.6.1"
   }
 }

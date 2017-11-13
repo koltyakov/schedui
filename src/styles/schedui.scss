@@ -1,0 +1,168 @@
+//== Wrap
+.time-sch-wrapper,
+.time-sch-header-wrapper,
+.time-sch-table-wrapper {
+  position: relative;
+}
+.time-sch-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+//== Header section
+.time-sch-period-container {
+  float: left;
+  position: relative;
+}
+.time-sch-time-container {
+  float: right;
+  position: relative;
+}
+.time-sch-button {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+}
+.time-sch-time-button-goto {
+  margin-right: 0.5em;
+}
+.time-sch-time-button-today {
+  margin-right: 0.5em;
+}
+.time-sch-content-wrap {
+  position: relative;
+}
+
+//== Table defaults
+.time-sch-wrapper {
+  th,
+  td {
+    border-width: 1px;
+    border-style: solid;
+    border-top-color: #e1e1e1;
+    border-bottom-color: #e1e1e1;
+    border-left-color: #c1c1c1;
+    border-right-color: #c1c1c1;
+  }
+  .time-sch-section-header {
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+  }
+  .time-sch-date-header {
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .time-sch-section {
+    width: 200px;
+  }
+}
+
+//== Section rows
+.time-sch-section-content {
+  vertical-align: middle;
+  text-align: center;
+  overflow: hidden;
+}
+
+//== Sections
+.time-sch-section-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+.time-sch-section-container {
+  position: relative;
+  overflow: hidden;
+}
+
+//== Calendar items
+.time-sch-item {
+  position: absolute;
+  min-height: 1em;
+  clear: both;
+}
+.time-sch-item-icon {
+  float: left;
+  width: 1em;
+  height: 1em;
+}
+.time-sch-item-content {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+}
+.time-sch-item-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.time-sch-item-event {
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  width: 1px;
+}
+.time-sch-item-start,
+.time-sch-item-end {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+}
+.time-sch-item-start {
+  left: 1px;
+  border-right: 2px dotted #ffffff;
+}
+.time-sch-item-end {
+  right: 1px;
+  border-left: 2px dotted #ffffff;
+}
+
+//== Current time
+.time-sch-current-time {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  background: transparent;
+}
+
+//== Utilities
+.time-sch-clearfix {
+  :before,
+  :after {
+    content: "\0020";
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+  :after {
+    clear: both;
+  }
+  zoom: 1;
+}
+
+//== Basic print styling to get rid of easily forgotten elements
+@media print {
+  .time-sch-current-time {
+    display: none;
+  }
+}
+
+.no-elements {
+  font-size: 12pt;
+  color: #999;
+  text-align: center;
+  line-height: 60px;
+}
