@@ -14,6 +14,7 @@ const SchedUI = {
         name: string
       }
     */
+    // tslint:disable-next-line:no-empty
     GetSections: function (callback) {},
     /* The function to call to fill up Items.
       Callback accepts an array of items in the format
@@ -33,6 +34,7 @@ const SchedUI = {
         ]
       }
     */
+    // tslint:disable-next-line:no-empty
     GetSchedule: function (callback, start, end) {},
     /* The Moment to start the calendar at. RECOMMENDED: .startOf('day') */
     Start: moment(),
