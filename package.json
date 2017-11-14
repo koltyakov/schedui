@@ -5,8 +5,9 @@
   "main": "dist/scripts/schedui.js",
   "types": "dist/scripts/index.d.ts",
   "scripts": {
-    "build": "export NODE_ENV=production && webpack --progress --hide-modules",
-    "dev": "webpack-dev-server --host 0.0.0.0 --port 8080 --inline --hot"
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && webpack --progress --hide-modules",
+    "dev": "npm run build && webpack-dev-server --host 0.0.0.0 --port 8080 --inline --hot --quiet --open=\"http://localhost:8080/example\""
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,9 @@
   },
   "homepage": "https://github.com/koltyakov/schedui#readme",
   "devDependencies": {
+    "jquery": "#1.12.4",
+    "jqueryui": "#1.12.0",
+    "moment": "^2.19.2",
     "@types/jquery": "^2.0.41",
     "@types/jqueryui": "^1.11.37",
     "awesome-typescript-loader": "^3.3.0",
@@ -32,13 +36,9 @@
     "sass-loader": "^6.0.6",
     "tslint": "^5.8.0",
     "tslint-config-standard": "^7.0.0",
+    "typescript": "^2.6.1",
     "uglifyjs-webpack-plugin": "^1.0.1",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.4"
-  },
-  "dependencies": {
-    "jquery": "#1.12.4",
-    "jqueryui": "#1.12.0",
-    "moment": "^2.19.2"
   }
 }
