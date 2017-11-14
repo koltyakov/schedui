@@ -1,6 +1,7 @@
 const path = require('path');
 
 const Uglify = require('uglifyjs-webpack-plugin');
+const Copy = require('copy-webpack-plugin');
 
 const fs = require('fs');
 const gracefulFs = require('graceful-fs');
@@ -11,23 +12,34 @@ module.exports = [
     context: path.join(__dirname, 'src'),
     entry: {
       'schedui': './scripts/index.ts',
-      'schedui.min': './scripts/index.ts'
+      'schedui.min': './scripts/index.ts',
+      '../example/example': './example/index.ts'
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: './scripts/[name].js',
       library: 'SchedUI'
     },
-    resolve: {
-      extensions: ['.ts']
+    externals: {
+      "jquery": "jQuery",
+      "jqueryui": "jQuery",
+      "moment": "moment"
     },
-    devtool: 'source-map',
+    resolve: {
+      extensions: ['.ts', '.js']
+    },
     plugins: [
+      new Copy([
+        { from: '**/*.html', to: './' }
+      ], {
+        ignore: ['*.ts', '*.scss']
+      }),
       new Uglify({
         sourceMap: false,
         test: /\.min\.js$/,
-      }),
+      })
     ],
+    devtool: 'source-map',
     module: {
       rules: [
         {
@@ -52,6 +64,10 @@ module.exports = [
         }
       ]
     },
-    cache: true
+    cache: true,
+    devServer: {
+      contentBase: './dist',
+      publicPath: '/'
+    }
   }
 ];

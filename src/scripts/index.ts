@@ -1,5 +1,6 @@
-﻿declare let $: any;
-declare let moment: any;
+﻿import * as $ from 'jquery';
+import 'jqueryui';
+import * as moment from 'moment';
 
 import './../styles/index.scss';
 
@@ -142,7 +143,7 @@ export const SchedUI = {
       let dur;
       // switch args to support add('s', 1) and add(1, 's')
       if (typeof input === 'string') {
-        dur = moment.duration(+val, input);
+        dur = moment.duration(+val, input as any);
       } else {
         dur = moment.duration(input, val);
       }
@@ -153,7 +154,7 @@ export const SchedUI = {
       let dur;
       // switch args to support subtract('s', 1) and subtract(1, 's')
       if (typeof input === 'string') {
-        dur = moment.duration(+val, input);
+        dur = moment.duration(+val, input as any);
       } else {
         dur = moment.duration(input, val);
       }

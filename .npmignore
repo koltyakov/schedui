@@ -1,8 +1,8 @@
 .gitignore
 node_modules
 src
-tmp
-gulpfile.js
 tsconfig.json
 tslint.json
+webpack.config.js
 assets
+dist/example

@@ -1,7 +1,10 @@
+import * as $ from 'jquery';
+import 'jqueryui';
+import * as moment from 'moment';
+
 import { SchedUI } from './../scripts';
 
-declare let $: any;
-declare let moment: any;
+import './index.scss';
 
 $(() => {
 
@@ -214,4 +217,5 @@ $(() => {
   };
 
   Calendar.Init();
+
 });
