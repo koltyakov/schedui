@@ -1,11 +1,9 @@
-﻿/// <reference path="../../node_modules/@types/jquery/index.d.ts" />
-/// <reference path="../../node_modules/@types/jqueryui/index.d.ts" />
-
-'use strict';
-
+﻿declare let $: any;
 declare let moment: any;
 
-const SchedUI = {
+import './../styles/index.scss';
+
+export const SchedUI = {
   Options: {
     /* The function to call to fill up Sections.
       Sections are cached. To clear cache, use TimelineScheduler.FillSections(true);

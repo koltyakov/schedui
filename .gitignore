@@ -1,4 +1,2 @@
-dist/example
-dist/libs
+dist
 node_modules
-tmp
