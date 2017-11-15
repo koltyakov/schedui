@@ -1,11 +1,12 @@
 {
   "name": "schedui",
-  "version": "0.0.3",
+  "version": "0.1.0-beta1",
   "description": "Sched UI - lite event schedule visualization UI library",
   "main": "dist/scripts/schedui.js",
   "types": "dist/scripts/index.d.ts",
   "scripts": {
     "clean": "rm -rf ./dist",
+    "watch": "npm run clean && webpack --progress --hide-modules --watch",
     "build": "npm run clean && webpack --progress --hide-modules",
     "dev": "npm run build && webpack-dev-server --host 0.0.0.0 --port 8080 --inline --hot --quiet --open=\"http://localhost:8080/example\""
   },

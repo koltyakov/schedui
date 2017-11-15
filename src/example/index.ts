@@ -1,8 +1,7 @@
 import * as $ from 'jquery';
-import 'jqueryui';
 import * as moment from 'moment';
 
-import { SchedUI } from './../scripts';
+import { SchedUI, IOptions } from './../scripts';
 
 import './index.scss';
 
@@ -10,39 +9,38 @@ $(() => {
 
   let today = moment().startOf('day');
 
-  const Calendar = {
-    Periods: [
+  const options: IOptions = {
+    periods: [
       {
-        Name: '3 days',
-        Label: '3 days',
-        TimeframePeriod: 60 * 3,
-        TimeframeOverall: 60 * 24 * 3,
-        TimeframeHeaders: ['Do MMM', 'HH'],
-        Classes: 'period-3day'
+        name: '3 days',
+        label: '3 days',
+        timeframePeriod: 60 * 3,
+        timeframeOverall: 60 * 24 * 3,
+        timeframeHeaders: ['Do MMM', 'HH'],
+        classes: 'period-3day'
       },
       {
-        Name: '1 week',
-        Label: '1 week',
-        TimeframePeriod: 60 * 24,
-        TimeframeOverall: 60 * 24 * 7,
-        TimeframeHeaders: ['MMM', 'Do'],
-        Classes: 'period-1week'
+        name: '1 week',
+        label: '1 week',
+        timeframePeriod: 60 * 24,
+        timeframeOverall: 60 * 24 * 7,
+        timeframeHeaders: ['MMM', 'Do'],
+        classes: 'period-1week'
       },
       {
-        Name: '1 month',
-        Label: '1 month',
-        TimeframePeriod: 60 * 24 * 1,
-        TimeframeOverall: 60 * 24 * 28,
-        TimeframeHeaders: ['MMM', 'Do'],
-        Classes: 'period-1month'
+        name: '1 month',
+        label: '1 month',
+        timeframePeriod: 60 * 24 * 1,
+        timeframeOverall: 60 * 24 * 28,
+        timeframeHeaders: ['MMM', 'Do'],
+        classes: 'period-1month'
       }
     ],
-
-    Items: [
+    items: [
       {
         id: 20,
         name: '<div>Item 1</div><div>Sub Info</div>',
-        sectionID: 1,
+        sectionId: 1,
         start: moment(today).add('days', -1),
         end: moment(today).add('days', 3),
         classes: 'item-status-three',
@@ -67,7 +65,7 @@ $(() => {
       {
         id: 21,
         name: '<div>Item 2</div><div>Sub Info</div>',
-        sectionID: 3,
+        sectionId: 3,
         start: moment(today).add('days', -1),
         end: moment(today).add('days', 3),
         classes: 'item-status-one',
@@ -87,11 +85,11 @@ $(() => {
         end: moment(today)
           .add('days', 3)
           .add('hours', 4),
-        sectionID: 1,
+        sectionId: 1,
         classes: 'item-status-none'
       }
     ],
-    Sections: [
+    sections: [
       {
         id: 1,
         name: 'Section 1'
@@ -105,117 +103,86 @@ $(() => {
         name: 'Section 3'
       }
     ],
-    Init: function () {
-      SchedUI.Options.GetSections = Calendar.GetSections;
-      SchedUI.Options.GetSchedule = Calendar.GetSchedule;
-      SchedUI.Options.Start = today;
-      SchedUI.Options.Periods = Calendar.Periods;
-      SchedUI.Options.SelectedPeriod = '1 week';
-      SchedUI.Options.Element = $('.calendar');
-
-      SchedUI.Options.AllowDragging = true;
-      SchedUI.Options.AllowResizing = true;
-
-      SchedUI.Options.Events.ItemClicked = Calendar.Item_Clicked;
-      SchedUI.Options.Events.ItemDropped = Calendar.Item_Dragged;
-      SchedUI.Options.Events.ItemResized = Calendar.Item_Resized;
-
-      SchedUI.Options.Events.ItemMovement = Calendar.Item_Movement;
-      SchedUI.Options.Events.ItemMovementStart = Calendar.Item_MovementStart;
-      SchedUI.Options.Events.ItemMovementEnd = Calendar.Item_MovementEnd;
-
-      SchedUI.Options.AppendWeekDaysClasses = true;
-
-      SchedUI.Options.Text.NextButton = '&nbsp;';
-      SchedUI.Options.Text.PrevButton = '&nbsp;';
-
-      SchedUI.Options.MaxHeight = 100;
-
-      SchedUI.Init(null);
+    selectedPeriod: '1 week',
+    element: $('.calendar'),
+    allowDragging: true,
+    allowResizing: true,
+    maxHeight: 100,
+    text: {
+      nextButton: '&nbsp;',
+      prevButton: '&nbsp;'
     },
+    events: {
+      itemClicked: function (item) {
+        console.log(item);
+      },
+      itemDragged: function (item, sectionId, start, end) {
+        let foundItem;
 
-    GetSections: function (callback) {
-      callback(Calendar.Sections);
-    },
+        console.log(item);
+        console.log(sectionId);
+        console.log(start);
+        console.log(end);
 
-    GetSchedule: function (callback, start, end) {
-      callback(Calendar.Items);
-    },
+        for (let i = 0; i < this.items.length; i++) {
+          foundItem = this.items[i];
 
-    Item_Clicked: function (item) {
-      console.log(item);
-    },
+          if (foundItem.id === item.id) {
+            foundItem.sectionId = sectionId;
+            foundItem.start = start;
+            foundItem.end = end;
 
-    Item_Dragged: function (item, sectionID, start, end) {
-      let foundItem;
-
-      console.log(item);
-      console.log(sectionID);
-      console.log(start);
-      console.log(end);
-
-      for (let i = 0; i < Calendar.Items.length; i++) {
-        foundItem = Calendar.Items[i];
-
-        if (foundItem.id === item.id) {
-          foundItem.sectionID = sectionID;
-          foundItem.start = start;
-          foundItem.end = end;
-
-          Calendar.Items[i] = foundItem;
+            this.items[i] = foundItem;
+          }
         }
-      }
 
-      SchedUI.Init(null);
-    },
+        this.init(null);
+      },
+      itemResized: function (item, start, end) {
+        let foundItem;
 
-    Item_Resized: function (item, start, end) {
-      let foundItem;
+        console.log(item);
+        console.log(start);
+        console.log(end);
 
-      console.log(item);
-      console.log(start);
-      console.log(end);
+        for (let i = 0; i < this.items.length; i++) {
+          foundItem = this.items[i];
 
-      for (let i = 0; i < Calendar.Items.length; i++) {
-        foundItem = Calendar.Items[i];
+          if (foundItem.id === item.id) {
+            foundItem.start = start;
+            foundItem.end = end;
 
-        if (foundItem.id === item.id) {
-          foundItem.start = start;
-          foundItem.end = end;
-
-          Calendar.Items[i] = foundItem;
+            this.items[i] = foundItem;
+          }
         }
+
+        this.init(null);
+      },
+      itemMovement: function (item, start, end) {
+        let html = `
+          <div>
+            <div>
+              Start: ${start.format('Do MMM YYYY HH:mm')}
+            </div>
+            <div>
+              End: ${end.format('Do MMM YYYY HH:mm')}
+            </div>
+          </div>
+        `;
+
+        $('.realtime-info')
+          .empty()
+          .append(html);
+      },
+      itemMovementStart: function () {
+        $('.realtime-info').show();
+      },
+      itemMovementEnd: function () {
+        $('.realtime-info').hide();
       }
-
-      SchedUI.Init(null);
-    },
-
-    Item_Movement: function (item, start, end) {
-      let html;
-
-      html = '<div>';
-      html += '   <div>';
-      html += '       Start: ' + start.format('Do MMM YYYY HH:mm');
-      html += '   </div>';
-      html += '   <div>';
-      html += '       End: ' + end.format('Do MMM YYYY HH:mm');
-      html += '   </div>';
-      html += '</div>';
-
-      $('.realtime-info')
-        .empty()
-        .append(html);
-    },
-
-    Item_MovementStart: function () {
-      $('.realtime-info').show();
-    },
-
-    Item_MovementEnd: function () {
-      $('.realtime-info').hide();
     }
   };
 
-  Calendar.Init();
+  (new SchedUI(options)).init(true);
 
 });
