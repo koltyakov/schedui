@@ -134,7 +134,7 @@ export class SchedUI {
 
   private setupPrototypes = () => {
     moment.fn['tsAdd'] = function (input, val) {
-      let dur;
+      let dur: moment.Duration;
       // switch args to support add('s', 1) and add(1, 's')
       if (typeof input === 'string') {
         dur = moment.duration(+val, input as any);
@@ -145,7 +145,7 @@ export class SchedUI {
       return this;
     };
     moment.fn['tsSubtract'] = function (input, val) {
-      let dur;
+      let dur: moment.Duration;
       // switch args to support subtract('s', 1) and subtract(1, 's')
       if (typeof input === 'string') {
         dur = moment.duration(+val, input as any);
@@ -506,9 +506,9 @@ export class SchedUI {
         }
         if (item.start <= end && item.end >= this.options.start) {
           foundPos = null;
-          let schedStart: number = this.options.start.milliseconds();
-          foundStart = moment(Math.max(item.start.milliseconds(), schedStart));
-          foundEnd = moment(Math.min(item.end.milliseconds(), end.milliseconds()));
+          let schedStart: number = this.options.start.toDate().getTime();
+          foundStart = moment(Math.max(item.start.toDate().getTime(), schedStart));
+          foundEnd = moment(Math.min(item.end.toDate().getTime(), end.toDate().getTime()));
           itemDiff = foundStart.diff(this.options.start, 'minutes');
           itemSelfDiff = Math.abs(foundStart.diff(foundEnd, 'minutes'));
           calcTop = 0;
