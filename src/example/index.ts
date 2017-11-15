@@ -119,44 +119,48 @@ $(() => {
       itemDragged: function (item, sectionId, start, end) {
         let foundItem;
 
+        let _self: SchedUI = this;
+
         console.log(item);
         console.log(sectionId);
         console.log(start);
         console.log(end);
 
-        for (let i = 0; i < this.items.length; i++) {
-          foundItem = this.items[i];
+        for (let i = 0; i < _self.options.items.length; i++) {
+          foundItem = _self.options.items[i];
 
           if (foundItem.id === item.id) {
             foundItem.sectionId = sectionId;
             foundItem.start = start;
             foundItem.end = end;
 
-            this.items[i] = foundItem;
+            _self.options.items[i] = foundItem;
           }
         }
 
-        this.init(null);
+        _self.init(true);
       },
       itemResized: function (item, start, end) {
         let foundItem;
+
+        let _self: SchedUI = this;
 
         console.log(item);
         console.log(start);
         console.log(end);
 
-        for (let i = 0; i < this.items.length; i++) {
-          foundItem = this.items[i];
+        for (let i = 0; i < _self.options.items.length; i++) {
+          foundItem = _self.options.items[i];
 
           if (foundItem.id === item.id) {
             foundItem.start = start;
             foundItem.end = end;
 
-            this.items[i] = foundItem;
+            _self.options.items[i] = foundItem;
           }
         }
 
-        this.init(null);
+        _self.init(true);
       },
       itemMovement: function (item, start, end) {
         let html = `

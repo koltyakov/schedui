@@ -12,7 +12,7 @@ import {
 } from './interfaces';
 
 export class SchedUI {
-  private options: IOptions;
+  public options: IOptions;
 
   private handlers: {
     gotoTimeShiftClicked: Function;
@@ -637,10 +637,12 @@ export class SchedUI {
         snapMode: 'inner',
         snapTolerance: 10,
         drag: function (event, ui) {
-          // tslint:disable-next-line:one-variable-per-declaration
-          let item, start, end;
-          // tslint:disable-next-line:one-variable-per-declaration
-          let period, periodEnd, minuteDiff;
+          let item: IItem;
+          let start: Moment;
+          let end: Moment;
+          let period: IPeriod;
+          let periodEnd: Moment;
+          let minuteDiff: number;
           if (_self.options.events.itemMovement) {
             period = _self.getSelectedPeriod();
             periodEnd = _self.getEndOfPeriod(_self.options.start, period);
@@ -721,14 +723,8 @@ export class SchedUI {
           );
           // If the start is before the start of our calendar, add the offset
           if (item.start < _self.options.start) {
-            start['tsAdd'](
-              'minutes',
-              item.start.diff(_self.options.start, 'minutes')
-            );
-            end['tsAdd'](
-              'minutes',
-              item.start.diff(_self.options.start, 'minutes')
-            );
+            start['tsAdd']('minutes', item.start.diff(_self.options.start, 'minutes'));
+            end['tsAdd']('minutes', item.start.diff(_self.options.start, 'minutes'));
           }
           // Append original to this section and reposition it while we wait
           ui.draggable.appendTo($(this));
@@ -804,42 +800,45 @@ export class SchedUI {
             $(this)
               .find('.time-sch-item-event')
               .hide();
-            if (this.options.events.itemMovementStart) {
-              this.options.events.itemMovementStart.call(this);
+            if (_self.options.events.itemMovementStart) {
+              _self.options.events.itemMovementStart.call(_self);
             }
           },
           stop: function (event, ui) {
-            // tslint:disable-next-line:one-variable-per-declaration
-            let item, start, end;
-            // tslint:disable-next-line:one-variable-per-declaration
-            let period, periodEnd, minuteDiff, section;
+            let item: IItem;
+            let start: Moment;
+            let end: Moment;
+            let period: IPeriod;
+            let periodEnd: Moment;
+            let minuteDiff: number;
+            let section: ISection;
             let $this;
             $this = $(this);
-            period = this.getSelectedPeriod();
-            periodEnd = this.getEndOfPeriod(this.options.start, period);
+            period = _self.getSelectedPeriod();
+            periodEnd = _self.getEndOfPeriod(_self.options.start, period);
             minuteDiff = Math.abs(
-              this.options.start.diff(periodEnd, 'minutes')
+              _self.options.start.diff(periodEnd, 'minutes')
             );
             item = $this.data('item');
             if (ui.position.left !== ui.originalPosition.left) {
               // Left handle moved
-              start = moment(this.options.start)['tsAdd'](
+              start = moment(_self.options.start)['tsAdd'](
                 'minutes',
                 minuteDiff *
-                  ($this.position().left / this.sectionWrap.width())
+                  ($this.position().left / _self.sectionWrap.width())
               );
               end = item.end;
             } else {
               // Right handle moved
               start = item.start;
-              end = moment(this.options.start)['tsAdd'](
+              end = moment(_self.options.start)['tsAdd'](
                 'minutes',
                 minuteDiff *
                   (($this.position().left + $this.width()) /
-                    this.sectionWrap.width())
+                  _self.sectionWrap.width())
               );
             }
-            if (this.options.disableOnMove) {
+            if (_self.options.disableOnMove) {
               if ($this.data('uiDraggable')) {
                 $this.draggable('disable');
               }
@@ -848,11 +847,11 @@ export class SchedUI {
               }
               $this.find('.time-sch-item-event').show();
             }
-            if (this.options.events.itemMovementEnd) {
-              this.options.events.itemMovementEnd.call(this);
+            if (_self.options.events.itemMovementEnd) {
+              _self.options.events.itemMovementEnd.call(_self);
             }
-            if (this.options.events.itemResized) {
-              this.options.events.itemResized.call(this, item, start, end);
+            if (_self.options.events.itemResized) {
+              _self.options.events.itemResized.call(_self, item, start, end);
             }
           }
         });
