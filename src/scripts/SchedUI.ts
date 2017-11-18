@@ -93,6 +93,9 @@ export class SchedUI {
           noElementsToDisplay: 'No elements to display'
         },
         ...((options || { text: {} }).text || {})
+      },
+      events: {
+        ...((options || { events: {} }).events || {})
       }
     };
   }
