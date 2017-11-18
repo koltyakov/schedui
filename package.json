@@ -3,7 +3,7 @@
   "version": "1.0.0-beta4",
   "description": "Sched UI - lite event schedule visualization UI library",
   "main": "dist/scripts/schedui.js",
-  "types": "dist/types/index.d.ts",
+  "typings": "dist/types/index",
   "scripts": {
     "clean": "rm -rf ./dist",
     "watch": "npm run clean && webpack --progress --hide-modules --watch",
