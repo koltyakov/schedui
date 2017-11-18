@@ -10,6 +10,12 @@
 npm install schedui --save
 ```
 
+### Prerequisites
+
+- Moment
+- jQuery
+- jQuery UI
+
 ## Usage
 
 ### TypeScript
