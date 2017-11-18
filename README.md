@@ -23,7 +23,7 @@ npm install schedui --save
 ```TypeScript
 import { SchedUI, IOptions } from 'schedui';
 
-(() => {
+$(() => {
 
   let today = moment().startOf('day');
 
