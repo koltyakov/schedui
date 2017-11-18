@@ -21,9 +21,6 @@ npm install schedui --save
 ### TypeScript
 
 ```TypeScript
-import * as $ from 'jquery';
-import * as moment from 'moment';
-
 import { SchedUI, IOptions } from 'schedui';
 
 (() => {
@@ -72,12 +69,11 @@ import { SchedUI, IOptions } from 'schedui';
     ],
     selectedPeriod: '1 week',
     element: $('.calendar')
-    }
   };
 
   (new SchedUI(options)).init(true);
 
-})();
+});
 ```
 
 This project is TypeScriptified fork of [TimeScheduler](https://github.com/Zallist/TimeScheduler).
