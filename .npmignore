@@ -7,3 +7,4 @@ webpack.config.js
 assets
 dist/example
 dist/lib
+tmp

@@ -65,10 +65,9 @@ module.exports = [
     },
     plugins: [
       new Copy([
-        { from: '**/*.html', to: './' }
-      ], {
-        ignore: ['*.ts', '*.scss']
-      }),
+        { from: '**/*.html', to: './' },
+        { from: './../tmp/scripts/*.d.ts', to: './types', flatten: true }
+      ]),
       new Uglify({
         sourceMap: false,
         test: /\.min\.js$/
