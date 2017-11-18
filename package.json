@@ -1,6 +1,6 @@
 {
   "name": "schedui",
-  "version": "1.0.0-beta2",
+  "version": "1.0.0-beta3",
   "description": "Sched UI - lite event schedule visualization UI library",
   "main": "dist/scripts/schedui.js",
   "types": "dist/types/index.d.ts",
